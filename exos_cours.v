@@ -51,5 +51,3 @@ Proof.
     intros R P Q.
     assumption.
 Qed.
-
-
