@@ -33,3 +33,30 @@ Section no_abstractions.
     Definition sum := a + b + c + d + e.
 End no_abstractions.
 Print sum.
+
+(* Ex 3.7 *)
+Open Scope Z_scope.
+Print Scope Z_scope.
+Check Zplus.
+Check Zmult.
+Definition poly z := Zplus (Zmult 2%Z (Zmult z z)) (Zplus (Zmult 3 z) 3).
+Eval compute in poly 2.
+Check (poly 2).
+Eval cbv delta in poly 2.
+Eval cbv delta [poly] in poly 2.
+Eval cbv beta delta [poly] in poly 2.
+Eval cbv beta zeta delta [poly] in poly 2.
+Eval cbv iota beta zeta delta [poly] in poly 2.
+
+Open Scope nat_scope.
+Theorem less : 36 <= 38.
+Proof le_S _ _ (le_S _ _ (le_n 36)).
+
+(* Ex 5.5 *)
+Theorem all_perm : forall (A : Type) (P : A -> A -> Prop), (forall x y : A, P x y) -> forall x y : A, P y x.
+Proof fun A P => fun (f : forall x y : A, P x y) => (fun y x => f x y).
+Print all_perm.
+
+Theorem resolution : forall (A: Type) (P Q R H : A -> Prop), (forall a : A, Q a -> R a -> H a) -> (forall b : A, P b -> Q b) -> (forall c : A, P c -> R c -> H c).
+Proof fun _ _ _ _ _ f g c pc => f c (g c pc).
+Print resolution.
